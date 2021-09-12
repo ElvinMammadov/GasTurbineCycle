@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -7,6 +8,8 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int dropdownValue = 1;
+  bool isVisible = false;
+  int items = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +30,9 @@ class _HomeState extends State<Home> {
             ),
             const Text(
               "How many values has to be added ?",
-              style: TextStyle(fontSize: 20),
+              style: TextStyle(
+                fontSize: 20,
+              ),
             ),
             const SizedBox(
               height: 20.0,
@@ -41,8 +46,10 @@ class _HomeState extends State<Home> {
                   icon: const Icon(Icons.arrow_downward),
                   iconSize: 24,
                   elevation: 5,
-                  style:
-                      const TextStyle(color: Colors.deepPurple, fontSize: 20),
+                  style: const TextStyle(
+                    color: Colors.deepPurple,
+                    fontSize: 20,
+                  ),
                   underline: Container(
                     height: 2,
                     color: Colors.deepPurpleAccent,
@@ -50,6 +57,7 @@ class _HomeState extends State<Home> {
                   onChanged: (int newValue) {
                     setState(() {
                       dropdownValue = newValue;
+                     //print('value is $dropdownValue');
                     });
                   },
                   items: <int>[1, 2, 3, 4, 5, 6, 7, 8]
@@ -71,11 +79,18 @@ class _HomeState extends State<Home> {
                   ),
                   child: RaisedButton(
                     onPressed: () {
+                      setState(() {
+                        isVisible = true;
+                        items = dropdownValue;
+                      });
                       //Navigator.pushNamed(context, '/values');
                     },
                     child: Text(
                       'Choose',
-                      style: TextStyle(color: Colors.white, fontSize: 17),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 17,
+                      ),
                     ),
                   ),
                 ),
@@ -84,28 +99,34 @@ class _HomeState extends State<Home> {
             const SizedBox(
               height: 20.0,
             ),
-            SizedBox(
-              height: 400.0,
-              width: 350.0,
-              child: GridView.count(
-                crossAxisCount: 2,
-                crossAxisSpacing: 2,
-                padding: const EdgeInsets.all(15.0),
-                children: List.generate(4, (index) {
-                  return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          'Item ${index+1}',
-                          style: TextStyle(color: Colors.black, fontSize: 17),
-                        ),
-                        TextField(
-                          decoration: InputDecoration(
-                            hintText: "Add value ${index+1}",
+            Visibility(
+              visible: isVisible,
+              maintainSize: true,
+              maintainAnimation: true,
+              maintainState: true,
+              child: Container(
+                height: 300.0,
+                width: 350.0,
+                child: GridView.count(
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 3,
+                  padding: const EdgeInsets.all(15.0),
+                  children: List.generate(items, (index) {
+                    return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            'Item ${index + 1}',
+                            style: TextStyle(color: Colors.black, fontSize: 17),
                           ),
-                        ),
-                      ]);
-                }),
+                          TextField(
+                            decoration: InputDecoration(
+                              hintText: "Add value ${index + 1}",
+                            ),
+                          ),
+                        ]);
+                  }),
+                ),
               ),
             ),
           ],
