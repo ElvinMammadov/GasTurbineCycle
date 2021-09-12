@@ -13,6 +13,10 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+    // print('height is $screenHeight');
+    // print('width is $screenWidth');
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: new AppBar(
@@ -46,18 +50,18 @@ class _HomeState extends State<Home> {
                   icon: const Icon(Icons.arrow_downward),
                   iconSize: 24,
                   elevation: 5,
-                  style: const TextStyle(
-                    color: Colors.deepPurple,
+                  style: TextStyle(
+                    color: Colors.blue[400],
                     fontSize: 20,
                   ),
                   underline: Container(
                     height: 2,
-                    color: Colors.deepPurpleAccent,
+                    color: Colors.blue[400],
                   ),
                   onChanged: (int newValue) {
                     setState(() {
                       dropdownValue = newValue;
-                     //print('value is $dropdownValue');
+                      //print('value is $dropdownValue');
                     });
                   },
                   items: <int>[1, 2, 3, 4, 5, 6, 7, 8]
@@ -72,8 +76,8 @@ class _HomeState extends State<Home> {
                 ),
                 ButtonTheme(
                   buttonColor: Colors.blue[400],
-                  minWidth: 60.0,
-                  height: 40.0,
+                  minWidth: 50.0,
+                  height: 30.0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
@@ -105,27 +109,76 @@ class _HomeState extends State<Home> {
               maintainAnimation: true,
               maintainState: true,
               child: Container(
-                height: 300.0,
-                width: 350.0,
-                child: GridView.count(
-                  crossAxisCount: 3,
-                  crossAxisSpacing: 3,
-                  padding: const EdgeInsets.all(15.0),
-                  children: List.generate(items, (index) {
-                    return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            'Item ${index + 1}',
-                            style: TextStyle(color: Colors.black, fontSize: 17),
+                // height: 300.0,
+                // width: 350.0,
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      height:
+                          items == 8 ? screenHeight * 0.5 : screenHeight * 0.3,
+                      width: screenWidth * 0.9,
+                      child: GridView.count(
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 2,
+                        padding: const EdgeInsets.all(10.0),
+                        children: List.generate(items, (index) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                'Item ${index + 1}',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 17,
+                                ),
+                              ),
+                              TextField(
+                                decoration: InputDecoration(
+                                  hintText: "Add value ${index + 1}",
+                                ),
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 15,
+                                ),
+                              ),
+                            ],
+                          );
+                        }),
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        SizedBox(
+                          width: 50.0,
+                        ),
+                        ButtonTheme(
+                          buttonColor: Colors.blue[400],
+                          minWidth: 50.0,
+                          height: 30.0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
                           ),
-                          TextField(
-                            decoration: InputDecoration(
-                              hintText: "Add value ${index + 1}",
+                          child: RaisedButton(
+                            onPressed: () {
+                              // setState(() {
+                              //   isVisible = true;
+                              //   items = dropdownValue;
+                              // });
+                              //Navigator.pushNamed(context, '/values');
+                            },
+                            child: Text(
+                              'Add',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 17,
+                              ),
                             ),
                           ),
-                        ]);
-                  }),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ),
