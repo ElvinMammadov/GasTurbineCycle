@@ -32,7 +32,6 @@ class _HomeState extends State<Home> {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     // print('width is $screenWidth');
-     print('max value  is ${maxValue.last}');
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: new AppBar(
